@@ -8,9 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.constraints.GlobalConstraints;
 
-public class Main extends Application {
-
-    AnimationTimer simulationLoop;
+public class Main extends Application
+{
     Scene scene;
 
     @Override
@@ -21,8 +20,6 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        //simulationLoop.start();
     }
 
 

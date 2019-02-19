@@ -5,15 +5,15 @@ package sample.constraints;
  */
 public class GlobalConstraints
 {
-    public static int CANVAS_WIDTH = 635;
-    public static int CANVAS_HEIGHT = 598;
+    public final static int CANVAS_WIDTH = 635;
+    public final static int CANVAS_HEIGHT = 598;
 
-    public static int SCENE_HEIGHT = 590;
-    public static int SCENE_WIDTH = 790;
+    public final static int SCENE_HEIGHT = 590;
+    public final static int SCENE_WIDTH = 790;
 
-    public static String APPLICATION_NAME = "Aplikacja zaliczeniowa 2019 semestr letni";
+    public final static String APPLICATION_NAME = "Aplikacja zaliczeniowa 2019 semestr letni";
 
-    public static int BALL_RADIUS = 5;
+    public final static int BALL_RADIUS = 5;
 
     public enum BOUNDARIES
     {

@@ -14,7 +14,7 @@ public class Ball
     protected double x;
     protected double y;
 
-    Random rng;
+    protected Random rng;
 
     protected Color color;
 
@@ -33,34 +33,41 @@ public class Ball
 
     public void tick()
     {
-        if(x + velocity.x < GlobalConstraints.CANVAS_WIDTH)
-        {
-            x = 0 + GlobalConstraints.BALL_RADIUS;
+        //losowanie zmiany kierunku w zależności od pozycji centrów - jak zrobić?
+        //losowanie zmiany prędkości
+        move();
+    }
 
+    protected void move()
+    {
+        if(x + velocity.x < 0)
+        {
+            x = GlobalConstraints.BALL_RADIUS;
+            bounce(GlobalConstraints.BOUNDARIES.LEFT);
         }
-        else if(x + velocity.x > GlobalConstraints.CANVAS_HEIGHT)
+        else if(x + velocity.x > GlobalConstraints.CANVAS_WIDTH)
         {
             x = GlobalConstraints.CANVAS_WIDTH - GlobalConstraints.BALL_RADIUS;
-
+            bounce(GlobalConstraints.BOUNDARIES.RIGHT);
         }
         else
             x += velocity.x;
 
-        if(y + velocity.y < GlobalConstraints.CANVAS_WIDTH)
+        if(y + velocity.y < 0)
         {
-            y = 0 + GlobalConstraints.BALL_RADIUS;
-
+            y = GlobalConstraints.BALL_RADIUS;
+            bounce(GlobalConstraints.BOUNDARIES.TOP);
         }
         else if(y + velocity.y > GlobalConstraints.CANVAS_HEIGHT)
         {
             y = GlobalConstraints.CANVAS_WIDTH - GlobalConstraints.BALL_RADIUS;
-
+            bounce(GlobalConstraints.BOUNDARIES.BOTTOM);
         }
         else
             y += velocity.y;
     }
 
-    private Vec2d bounce(GlobalConstraints.BOUNDARIES boundary)
+    protected Vec2d bounce(GlobalConstraints.BOUNDARIES boundary)
     {
         switch(boundary)
         {

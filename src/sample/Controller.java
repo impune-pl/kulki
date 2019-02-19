@@ -2,32 +2,48 @@ package sample;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 
 
 
-public class Controller {
+public class Controller
+{
+    Simulation simulation;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="MainCanvas"
-    private Canvas MainCanvas; // Value injected by FXMLLoader
+    @FXML
+    private Canvas MainCanvas;
 
-    @FXML // fx:id="StartButton"
-    private Button StartButton; // Value injected by FXMLLoader
+    @FXML
+    private Button StartButton;
 
-    @FXML // fx:id="StopButton"
-    private Button StopButton; // Value injected by FXMLLoader
+    @FXML
+    private Button StopButton;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
+    @FXML
+    void initialize()
+    {
+        simulation = new Simulation(MainCanvas);
+    }
 
+    @FXML
+    private void startSimulation()
+    {
+        simulation.start();
+    }
 
+    @FXML
+    private void stopSimulation()
+    {
+        simulation.stop();
     }
 }

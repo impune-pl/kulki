@@ -9,4 +9,12 @@ public class CentralBall extends Ball
     {
         super();
     }
+
+    public void tick()
+    {
+
+        //WAŻNE  - losowanie zmiany koloru
+        //losowanie zmiany prędkości z super
+        super.move();
+    }
 }

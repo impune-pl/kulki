@@ -13,8 +13,6 @@ public class GlobalConstraints
 
     public final static String APPLICATION_NAME = "Aplikacja zaliczeniowa 2019 semestr letni";
 
-    public final static int BALL_RADIUS = 5;
-
     public enum BOUNDARIES
     {
         LEFT,

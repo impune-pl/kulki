@@ -2,6 +2,7 @@ package sample.entity;
 
 import com.sun.javafx.geom.Vec2d;
 import javafx.scene.paint.Color;
+import sample.constraints.BallConstraints;
 import sample.constraints.GlobalConstraints;
 
 import java.util.Random;
@@ -20,48 +21,93 @@ public class Ball
 
     protected Vec2d velocity;
 
+    private long lifetime;
+
+    private boolean isDead;
+
     public Ball()
     {
         rng = new Random();
-        y = rng.nextInt(GlobalConstraints.CANVAS_HEIGHT - GlobalConstraints.BALL_RADIUS * 2)
-                + GlobalConstraints.BALL_RADIUS;
-        x = rng.nextInt(GlobalConstraints.CANVAS_WIDTH - GlobalConstraints.BALL_RADIUS * 2)
-                + GlobalConstraints.BALL_RADIUS;
-        velocity = new Vec2d(rng.nextInt(3)+1,
-                             rng.nextInt(3)+1);
+        y = rng.nextInt(GlobalConstraints.CANVAS_HEIGHT - BallConstraints.BALL_RADIUS * 2)
+                + BallConstraints.BALL_RADIUS;
+        x = rng.nextInt(GlobalConstraints.CANVAS_WIDTH - BallConstraints.BALL_RADIUS * 2)
+                + BallConstraints.BALL_RADIUS;
+        int directionX = rng.nextBoolean() ? -1 : 1;
+        int directionY = rng.nextBoolean() ? -1 : 1;
+        velocity = new Vec2d(rng.nextInt(3) * directionX,
+                             rng.nextInt(3) * directionY);
+        isDead = false;
+        lifetime = 1;
     }
 
     public void tick()
     {
-        //losowanie zmiany kierunku w zależności od pozycji centrów - jak zrobić?
-        //losowanie zmiany prędkości
+        isDead = shouldDie();
+        randomizeVelocity();
         move();
+        lifetime++;
+    }
+
+    private boolean shouldDie()
+    {
+        if(rng.nextInt((int)(lifetime + lifetime * 0.01))>lifetime)
+            return true;
+        return false;
+    }
+
+    public void chooseColorSource(CentralBall a, CentralBall b)
+    {
+        int distanceToA = (int)a.distance(x,y);
+        int distanceToB = (int)b.distance(x,y);
+        int max = distanceToA + distanceToB;
+        if(rng.nextInt(max) > distanceToA)
+            color = a.color;
+        else
+            color = b.color;
+    }
+
+    protected void randomizeVelocity()
+    {
+        int directionX = rng.nextBoolean() ? -1 : 1;
+        int directionY = rng.nextBoolean() ? -1 : 1;
+        if(rng.nextInt(BallConstraints.BALL_VELOCITY_CHANGE_BOUND) > BallConstraints.BALL_VELOCITY_CHANGE_MIN)
+            velocity = new Vec2d(rng.nextInt(BallConstraints.BALL_VELOCITY_MAX_CHANGE )* directionX,
+                                 rng.nextInt(BallConstraints.BALL_VELOCITY_MAX_CHANGE )* directionY);
+    }
+
+    public boolean isDead()
+    {
+        return  isDead;
     }
 
     protected void move()
     {
-        if(x + velocity.x < 0)
+        if(x + velocity.x <= 0)
         {
-            x = GlobalConstraints.BALL_RADIUS;
-            bounce(GlobalConstraints.BOUNDARIES.LEFT);
+            x = BallConstraints.BALL_RADIUS;
+            velocity = bounce(GlobalConstraints.BOUNDARIES.LEFT);
+            return;
         }
-        else if(x + velocity.x > GlobalConstraints.CANVAS_WIDTH)
+        else if(x + velocity.x >= GlobalConstraints.CANVAS_WIDTH - BallConstraints.BALL_RADIUS*2)
         {
-            x = GlobalConstraints.CANVAS_WIDTH - GlobalConstraints.BALL_RADIUS;
-            bounce(GlobalConstraints.BOUNDARIES.RIGHT);
+            x = GlobalConstraints.CANVAS_WIDTH - BallConstraints.BALL_RADIUS*2;
+            velocity = bounce(GlobalConstraints.BOUNDARIES.RIGHT);
+            return;
         }
         else
             x += velocity.x;
 
-        if(y + velocity.y < 0)
+        if(y + velocity.y <= 0)
         {
-            y = GlobalConstraints.BALL_RADIUS;
-            bounce(GlobalConstraints.BOUNDARIES.TOP);
+            y = BallConstraints.BALL_RADIUS;
+            velocity = bounce(GlobalConstraints.BOUNDARIES.TOP);
+            return;
         }
-        else if(y + velocity.y > GlobalConstraints.CANVAS_HEIGHT)
+        else if(y + velocity.y >= GlobalConstraints.CANVAS_HEIGHT - BallConstraints.BALL_RADIUS*2)
         {
-            y = GlobalConstraints.CANVAS_WIDTH - GlobalConstraints.BALL_RADIUS;
-            bounce(GlobalConstraints.BOUNDARIES.BOTTOM);
+            y = GlobalConstraints.CANVAS_HEIGHT - BallConstraints.BALL_RADIUS*2;
+            velocity = bounce(GlobalConstraints.BOUNDARIES.BOTTOM);
+            return;
         }
         else
             y += velocity.y;
@@ -81,5 +127,20 @@ public class Ball
                 return new Vec2d(velocity.x, -velocity.y);
         }
         return new Vec2d();
+    }
+
+    public double getX()
+    {
+        return x;
+    }
+
+    public double getY()
+    {
+        return y;
+    }
+
+    public Color color()
+    {
+        return color;
     }
 }

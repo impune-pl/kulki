@@ -1,6 +1,7 @@
 package sample.entity;
 
 import javafx.scene.paint.Color;
+import jdk.nashorn.internal.runtime.GlobalConstants;
 import sample.constraints.BallConstraints;
 import sample.constraints.ColorConstraints;
 
@@ -16,7 +17,6 @@ public class CentralBall extends Ball
     public CentralBall()
     {
         super();
-        hasChangedColor = true;
         randomizeColorChange();
         framesSinceLastColorChange = 0;
     }
@@ -24,7 +24,8 @@ public class CentralBall extends Ball
     public void tick()
     {
         hasChangedColor = false;
-        if(rng.nextInt(BallConstraints.CENTRAL_BALL_COLOR_CHANGE_BOUND) > BallConstraints.CENTRAL_BALL_COLOR_CHANGE_MIN && framesSinceLastColorChange > 100)
+        if(rng.nextInt(BallConstraints.CENTRAL_BALL_COLOR_CHANGE_BOUND) > BallConstraints.CENTRAL_BALL_COLOR_CHANGE_MIN
+                && framesSinceLastColorChange > BallConstraints.CENTRAL_BALLS_MIN_FRAMES_BETWEEN_COLOR_CHANGE)
             randomizeColorChange();
         framesSinceLastColorChange++;
         super.randomizeVelocity();

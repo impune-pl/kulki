@@ -15,6 +15,7 @@ import java.util.Random;
 /**
  * Created by Krzysztof 'impune_pl' on 19.02.2019.
  */
+//TODO: Switch from canvas to individual javafx.scene.circle (one per ball, stored in ball object
 public class Simulation
 {
     private boolean isRunning;
@@ -29,6 +30,7 @@ public class Simulation
     /*Would be useful if i decided to move balls based on time instead of frames (lines 68 and 69 too)
     private long lastGameTime;
     private double secondsElapsed;
+    May be useful again after switching to circles
     */
     private Random rng;
 
@@ -62,12 +64,18 @@ public class Simulation
         this.balls = new ArrayList<Ball>();
         this.centralBalls = new ArrayList<CentralBall>();
 
-        this.centralBalls.add(new CentralBall());
-        this.centralBalls.add(new CentralBall());
+        CentralBall cb = new CentralBall();
+        cb.tick();
+        this.centralBalls.add(cb);
+        cb = new CentralBall();
+        cb.tick();
+        this.centralBalls.add(cb);
 
         for (int i = 0; i < BallConstraints.BALL_STARTING_AMOUNT; i++)
         {
-            this.balls.add(new Ball());
+            Ball b = new Ball();
+            b.chooseColorSource(centralBalls.get(0),centralBalls.get(1));
+            this.balls.add(b);
         }
 
         timer = new AnimationTimer()
@@ -77,6 +85,8 @@ public class Simulation
             {
                 /*secondsElapsed = (double)(now - lastGameTime) / 1000000000.0d;
                 lastGameTime = now;*/
+
+                //Comment for fancy drawings
                 graphicsContext.clearRect(0, 0, GlobalConstraints.CANVAS_WIDTH, GlobalConstraints.CANVAS_HEIGHT);
                 updateSimulation();
                 renderSimulation();
@@ -87,23 +97,31 @@ public class Simulation
     private void updateSimulation()
     {
         if(rng.nextInt(100) > 80 && BallConstraints.BALL_MAX_AMOUNT > balls.size())
-            balls.add(new Ball());
+        {
+            Ball b = new Ball();
+            b.chooseColorSource(centralBalls.get(0),centralBalls.get(1));
+            balls.add(b);
+        }
 
         ArrayList<Ball> deadBalls = new ArrayList<Ball>();
         for(Ball b : balls)
         {
             b.tick();
-            if(b.isDead())
+            if(b.isDead() && balls.size() > BallConstraints.BALL_MIN_AMOUNT)
                 deadBalls.add(b);
         }
+
+        boolean oneOrMoreChangedColor = false;
         for (CentralBall cb : centralBalls)
         {
             cb.tick();
+            if(cb.hasChangedColor())
+                oneOrMoreChangedColor = cb.hasChangedColor();
         }
 
         balls.removeAll(deadBalls);
 
-        if(centralBalls.get(0).hasChangedColor() || centralBalls.get(1).hasChangedColor())
+        if(oneOrMoreChangedColor)
         {
             for (Ball b: balls)
             {
@@ -121,7 +139,7 @@ public class Simulation
                                      b.getY(),
                                      BallConstraints.BALL_RADIUS*2,
                                      BallConstraints.BALL_RADIUS*2);
-            graphicsContext.setLineWidth(1.0);
+            graphicsContext.setLineWidth(0.5);
             graphicsContext.strokeOval(b.getX(),
                                        b.getY(),
                                        BallConstraints.BALL_RADIUS*2,
@@ -129,16 +147,16 @@ public class Simulation
         }
 
 
-        for (CentralBall b: centralBalls)
+        for (CentralBall cb: centralBalls)
         {
-            graphicsContext.setFill(b.color());
-            graphicsContext.fillOval(b.getX(),
-                                     b.getY(),
+            graphicsContext.setFill(cb.color());
+            graphicsContext.fillOval(cb.getX(),
+                                     cb.getY(),
                                      BallConstraints.BALL_RADIUS*3,
                                      BallConstraints.BALL_RADIUS*3);
             graphicsContext.setLineWidth(2.0);
-            graphicsContext.strokeOval(b.getX(),
-                                     b.getY(),
+            graphicsContext.strokeOval(cb.getX(),
+                                     cb.getY(),
                                      BallConstraints.BALL_RADIUS*3,
                                      BallConstraints.BALL_RADIUS*3);
         }

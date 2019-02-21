@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-
+import javafx.scene.layout.AnchorPane;
 
 
 public class Controller
@@ -27,6 +27,9 @@ public class Controller
 
     @FXML
     private Button StopButton;
+
+    @FXML
+    private AnchorPane MainArea;
 
     @FXML
     void initialize()

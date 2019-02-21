@@ -59,22 +59,25 @@ public class Ball
     {
         int distanceToA = (int)a.distance(x,y);
         int distanceToB = (int)b.distance(x,y);
-        int max;
+        int lower;
+        CentralBall closer;
+        CentralBall farther;
         if(distanceToA > distanceToB)
-            max = distanceToB * BallConstraints.BALL_LOWER_DISTANCE_MULTIPLIER
-                    + distanceToA * BallConstraints.BALL_HIGHER_DISTANCE_MULTIPLIER;
+        {
+            lower = distanceToB;
+            closer = b;
+            farther = a;
+        }
         else
-            max = distanceToA * BallConstraints.BALL_LOWER_DISTANCE_MULTIPLIER
-                    + distanceToB * BallConstraints.BALL_HIGHER_DISTANCE_MULTIPLIER;
-        if(rng.nextInt(max) > distanceToA)
-            color = a.color;
+        {
+            lower = distanceToA;
+            closer = a;
+            farther = b;
+        }
+        if(rng.nextInt(distanceToA + distanceToB) > lower)
+            color = closer.color();
         else
-            color = b.color;
-        /*
-        if(distanceToA>distanceToB)
-            color = b.color();
-        else
-            color=a.color();*/
+            color = farther.color();
     }
 
     protected void randomizeVelocity()

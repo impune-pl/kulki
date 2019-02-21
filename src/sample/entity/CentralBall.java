@@ -1,7 +1,6 @@
 package sample.entity;
 
 import javafx.scene.paint.Color;
-import jdk.nashorn.internal.runtime.GlobalConstants;
 import sample.constraints.BallConstraints;
 import sample.constraints.ColorConstraints;
 

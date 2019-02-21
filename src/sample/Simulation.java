@@ -83,9 +83,6 @@ public class Simulation
             @Override
             public void handle(long now)
             {
-                /*secondsElapsed = (double)(now - lastGameTime) / 1000000000.0d;
-                lastGameTime = now;*/
-
                 //Comment for fancy drawings
                 graphicsContext.clearRect(0, 0, GlobalConstraints.CANVAS_WIDTH, GlobalConstraints.CANVAS_HEIGHT);
                 updateSimulation();
@@ -139,7 +136,7 @@ public class Simulation
                                      b.getY(),
                                      BallConstraints.BALL_RADIUS*2,
                                      BallConstraints.BALL_RADIUS*2);
-            graphicsContext.setLineWidth(0.5);
+            graphicsContext.setLineWidth(BallConstraints.BALL_OUTLINE);
             graphicsContext.strokeOval(b.getX(),
                                        b.getY(),
                                        BallConstraints.BALL_RADIUS*2,
@@ -154,7 +151,7 @@ public class Simulation
                                      cb.getY(),
                                      BallConstraints.BALL_RADIUS*3,
                                      BallConstraints.BALL_RADIUS*3);
-            graphicsContext.setLineWidth(2.0);
+            graphicsContext.setLineWidth(BallConstraints.CENTRAL_BALL_OUTLINE);
             graphicsContext.strokeOval(cb.getX(),
                                      cb.getY(),
                                      BallConstraints.BALL_RADIUS*3,

@@ -12,14 +12,14 @@ import java.util.Random;
  */
 public class Ball
 {
-    protected double x;
-    protected double y;
+    double x;
+    double y;
 
-    protected Random rng;
+    Random rng;
 
-    protected Color color;
+    Color color;
 
-    protected Vec2d velocity;
+    private Vec2d velocity;
 
     private long lifetime;
 
@@ -50,9 +50,7 @@ public class Ball
 
     private boolean shouldDie()
     {
-        if(rng.nextInt((int)(lifetime + lifetime * 0.01))>lifetime)
-            return true;
-        return false;
+        return rng.nextInt((int) (lifetime + lifetime * 0.01)) > lifetime;
     }
 
     public void chooseColorSource(CentralBall a, CentralBall b)
@@ -80,7 +78,7 @@ public class Ball
             color = farther.color();
     }
 
-    protected void randomizeVelocity()
+    void randomizeVelocity()
     {
         int directionX = rng.nextBoolean() ? -1 : 1;
         int directionY = rng.nextBoolean() ? -1 : 1;
@@ -94,7 +92,7 @@ public class Ball
         return  isDead;
     }
 
-    protected void move()
+    void move()
     {
         if(x + velocity.x <= 0)
         {
@@ -115,19 +113,17 @@ public class Ball
         {
             y = BallConstraints.BALL_RADIUS;
             velocity = bounce(GlobalConstraints.BOUNDARIES.TOP);
-            return;
         }
         else if(y + velocity.y >= GlobalConstraints.CANVAS_HEIGHT - BallConstraints.BALL_RADIUS*2)
         {
             y = GlobalConstraints.CANVAS_HEIGHT - BallConstraints.BALL_RADIUS*2;
             velocity = bounce(GlobalConstraints.BOUNDARIES.BOTTOM);
-            return;
         }
         else
             y += velocity.y;
     }
 
-    protected Vec2d bounce(GlobalConstraints.BOUNDARIES boundary)
+    private Vec2d bounce(GlobalConstraints.BOUNDARIES boundary)
     {
         switch(boundary)
         {

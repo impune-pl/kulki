@@ -48,13 +48,12 @@ public class CentralBall extends Ball
         return false;
     }
 
-    public double distance(double x, double y)
+    double distance(double x, double y)
     {
         return Math.sqrt(Math.pow(this.x - x, 2.0d) + Math.pow(this.y - y, 2.0d));
     }
 
     public void chooseColorSource(CentralBall a, CentralBall b)
     {
-        return;
     }
 }

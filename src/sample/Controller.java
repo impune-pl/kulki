@@ -1,35 +1,21 @@
 package sample;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 
 
 public class Controller
 {
-    Simulation simulation;
-
     @FXML
-    private ResourceBundle resources;
-
+    public Button StartButton;
     @FXML
-    private URL location;
+    public Button StopButton;
+
+    private Simulation simulation;
 
     @FXML
     private Canvas MainCanvas;
-
-    @FXML
-    private Button StartButton;
-
-    @FXML
-    private Button StopButton;
-
-    @FXML
-    private AnchorPane MainArea;
 
     @FXML
     void initialize()

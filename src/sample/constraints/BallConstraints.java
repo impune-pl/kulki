@@ -17,6 +17,6 @@ public class BallConstraints
     public final static double CENTRAL_BALL_OUTLINE = 2.0;
     public final static int CENTRAL_BALL_COLOR_CHANGE_BOUND = 100; //max value from RNG
     public final static int CENTRAL_BALL_COLOR_CHANGE_MIN = 98; //will change color if value > than this
-    public final static int CENTRAL_BALL_AMOUNT = 2; //amount of central balls, WARNING: DO NOT CHANGE, DO NOT USE, NOT IMPLEMENTED YET
+    //public final static int CENTRAL_BALL_AMOUNT = 2; //amount of central balls, WARNING: DO NOT CHANGE, DO NOT USE, NOT IMPLEMENTED YET
     public final static int CENTRAL_BALLS_MIN_FRAMES_BETWEEN_COLOR_CHANGE = 100; //regulates framelapse between color changes of central balls
 }

@@ -16,13 +16,12 @@ import java.util.Random;
  * Created by Krzysztof 'impune_pl' on 19.02.2019.
  */
 //TODO: Switch from canvas to individual javafx.scene.circle (one per ball, stored in ball object
-public class Simulation
+class Simulation
 {
     private boolean isRunning;
 
     private AnimationTimer timer;
 
-    private Canvas canvas;
     private GraphicsContext graphicsContext;
 
     private ArrayList<Ball> balls;
@@ -34,7 +33,7 @@ public class Simulation
     */
     private Random rng;
 
-    public void start()
+    void start()
     {
         if(isRunning)
             return;
@@ -45,7 +44,7 @@ public class Simulation
         isRunning = true;
     }
 
-    public void stop()
+    void stop()
     {
         if(!isRunning)
             return;
@@ -53,16 +52,15 @@ public class Simulation
         isRunning = false;
     }
 
-    public Simulation(final Canvas canvas)
+    Simulation(final Canvas canvas)
     {
         this.rng = new Random();
-        this.canvas = canvas;
 
         this.graphicsContext = canvas.getGraphicsContext2D();
         graphicsContext.setStroke(Color.BLACK);
 
-        this.balls = new ArrayList<Ball>();
-        this.centralBalls = new ArrayList<CentralBall>();
+        this.balls = new ArrayList<>();
+        this.centralBalls = new ArrayList<>();
 
         CentralBall cb = new CentralBall();
         cb.tick();
@@ -100,7 +98,7 @@ public class Simulation
             balls.add(b);
         }
 
-        ArrayList<Ball> deadBalls = new ArrayList<Ball>();
+        ArrayList<Ball> deadBalls = new ArrayList<>();
         for(Ball b : balls)
         {
             b.tick();

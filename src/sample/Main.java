@@ -9,13 +9,12 @@ import sample.constraints.GlobalConstraints;
 
 public class Main extends Application
 {
-    Scene scene;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle(GlobalConstraints.APPLICATION_NAME);
-        scene = new Scene(root, GlobalConstraints.SCENE_WIDTH, GlobalConstraints.SCENE_HEIGHT);
+        Scene scene = new Scene(root, GlobalConstraints.SCENE_WIDTH, GlobalConstraints.SCENE_HEIGHT);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();

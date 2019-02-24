@@ -81,7 +81,6 @@ class Simulation
             @Override
             public void handle(long now)
             {
-                //Comment for fancy drawings
                 if(!drawMode)
                     graphicsContext.clearRect(0, 0, GlobalConstraints.CANVAS_WIDTH, GlobalConstraints.CANVAS_HEIGHT);
                 updateSimulation();

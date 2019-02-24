@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -15,7 +17,6 @@ import java.util.Random;
 /**
  * Created by Krzysztof 'impune_pl' on 19.02.2019.
  */
-//TODO: Switch from canvas to individual javafx.scene.circle (one per ball, stored in ball object
 class Simulation
 {
     private boolean isRunning;
@@ -26,20 +27,16 @@ class Simulation
 
     private ArrayList<Ball> balls;
     private ArrayList<CentralBall> centralBalls;
-    /*Would be useful if i decided to move balls based on time instead of frames (lines 68 and 69 too)
-    private long lastGameTime;
-    private double secondsElapsed;
-    May be useful again after switching to circles
-    */
     private Random rng;
+
+    IntegerProperty ballCount;
+
+    private boolean drawMode;
 
     void start()
     {
         if(isRunning)
             return;
-
-        //Optional additional actions before starting
-
         timer.start();
         isRunning = true;
     }
@@ -54,6 +51,7 @@ class Simulation
 
     Simulation(final Canvas canvas)
     {
+        this.ballCount = new SimpleIntegerProperty();
         this.rng = new Random();
 
         this.graphicsContext = canvas.getGraphicsContext2D();
@@ -76,13 +74,16 @@ class Simulation
             this.balls.add(b);
         }
 
+        ballCount.set(0);
+
         timer = new AnimationTimer()
         {
             @Override
             public void handle(long now)
             {
                 //Comment for fancy drawings
-                graphicsContext.clearRect(0, 0, GlobalConstraints.CANVAS_WIDTH, GlobalConstraints.CANVAS_HEIGHT);
+                if(!drawMode)
+                    graphicsContext.clearRect(0, 0, GlobalConstraints.CANVAS_WIDTH, GlobalConstraints.CANVAS_HEIGHT);
                 updateSimulation();
                 renderSimulation();
             }
@@ -105,6 +106,7 @@ class Simulation
             if(b.isDead() && balls.size() > BallConstraints.BALL_MIN_AMOUNT)
                 deadBalls.add(b);
         }
+        balls.removeAll(deadBalls);
 
         boolean oneOrMoreChangedColor = false;
         for (CentralBall cb : centralBalls)
@@ -114,8 +116,7 @@ class Simulation
                 oneOrMoreChangedColor = cb.hasChangedColor();
         }
 
-        balls.removeAll(deadBalls);
-
+        ballCount.set(balls.size());
         if(oneOrMoreChangedColor)
         {
             for (Ball b: balls)
@@ -141,7 +142,6 @@ class Simulation
                                        BallConstraints.BALL_RADIUS*2);
         }
 
-
         for (CentralBall cb: centralBalls)
         {
             graphicsContext.setFill(cb.color());
@@ -155,5 +155,32 @@ class Simulation
                                      BallConstraints.BALL_RADIUS*3,
                                      BallConstraints.BALL_RADIUS*3);
         }
+    }
+
+    void removeBalls(int ballCount)
+    {
+        while(balls.size()>0 && ballCount > 0 && balls.size() > BallConstraints.BALL_MIN_AMOUNT)
+        {
+            balls.remove(0);
+            ballCount--;
+        }
+        renderSimulation();
+    }
+
+    void addBalls(int ballCount)
+    {
+        while(ballCount > 0 && balls.size() < BallConstraints.BALL_MAX_AMOUNT)
+        {
+            Ball b = new Ball();
+            b.chooseColorSource(centralBalls.get(0),centralBalls.get(1));
+            balls.add(b);
+            ballCount--;
+        }
+        renderSimulation();
+    }
+
+    void setDrawMode(boolean b)
+    {
+        drawMode = b;
     }
 }

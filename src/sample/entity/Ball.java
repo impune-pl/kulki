@@ -45,13 +45,12 @@ public class Ball
         isDead = shouldDie();
         randomizeVelocity();
         move();
-        lifetime+=1.0d;
+        lifetime++;
     }
 
     private boolean shouldDie()
     {
-        int a = rng.nextInt((int)(lifetime + lifetime * 0.005));
-        return a > lifetime;
+        return rng.nextInt((int)lifetime) / lifetime >= 0.5;
     }
 
     public void chooseColorSource(CentralBall a, CentralBall b)

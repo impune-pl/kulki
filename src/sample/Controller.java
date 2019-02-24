@@ -71,7 +71,7 @@ public class Controller
         });
 
         BallsCountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.matches("\\d{1,4}"))
+            if(!newValue.matches("1?\\d{1,4}"))
             {
                 BallsCountTextField.setText(oldValue);
             }

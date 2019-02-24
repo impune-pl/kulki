@@ -7,7 +7,7 @@ public class BallConstraints
 {
     public static int BALL_VELOCITY_CHANGE_MIN = 80; //will change velocity if value > than this
 
-    public final static int BALL_MAX_AMOUNT = 40000; //max amount at given time
+    public final static int BALL_MAX_AMOUNT = 400000; //max amount at given time
     public final static int BALL_MIN_AMOUNT = 100; //will never drop below that amount
     public final static int BALL_STARTING_AMOUNT = 5000; //staring amount
     public final static int BALL_VELOCITY_MAX_CHANGE = 3; //max velocity in one axis counting from 0 (bounds are n and -n) (x or y)

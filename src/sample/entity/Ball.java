@@ -50,7 +50,9 @@ public class Ball
 
     private boolean shouldDie()
     {
-        return rng.nextInt((int)lifetime) / lifetime >= 0.5;
+        if(rng.nextLong() % lifetime /2  > lifetime)
+            return true;
+        return false;
     }
 
     public void chooseColorSource(CentralBall a, CentralBall b)

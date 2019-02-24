@@ -83,7 +83,11 @@ public class Controller
     @FXML
     private void addBalls()
     {
-        int ballCount = Integer.parseInt(BallsCountTextField.getText());
+        int ballCount;
+        if(BallsCountTextField.getText().length() > 0)
+            ballCount = Integer.parseInt(BallsCountTextField.getText());
+        else
+            ballCount = 1;
         if(ballCount != -1)
             simulation.addBalls(ballCount);
     }
@@ -91,7 +95,11 @@ public class Controller
     @FXML
     private void removeBalls()
     {
-        int ballCount = Integer.parseInt(BallsCountTextField.getText());
+        int ballCount;
+        if(BallsCountTextField.getText().length() > 0)
+            ballCount = Integer.parseInt(BallsCountTextField.getText());
+        else
+            ballCount = 1;
         if(ballCount != -1)
             simulation.removeBalls(ballCount);
     }

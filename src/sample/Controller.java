@@ -3,6 +3,7 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+
 import sample.constraints.BallConstraints;
 
 
@@ -71,7 +72,7 @@ public class Controller
         });
 
         BallsCountTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(!newValue.matches("1?\\d{1,4}"))
+            if(!newValue.matches("1?\\d{0,4}"))
             {
                 BallsCountTextField.setText(oldValue);
             }

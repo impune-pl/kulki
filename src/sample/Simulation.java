@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
 import sample.constraints.BallConstraints;
 import sample.constraints.GlobalConstraints;
 import sample.entity.Ball;

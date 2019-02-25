@@ -1,7 +1,9 @@
 package sample.entity;
 
 import com.sun.javafx.geom.Vec2d;
+
 import javafx.scene.paint.Color;
+
 import sample.constraints.BallConstraints;
 import sample.constraints.GlobalConstraints;
 
@@ -50,7 +52,7 @@ public class Ball
 
     private boolean shouldDie()
     {
-        if(rng.nextLong() % lifetime /2  > lifetime)
+        if(rng.nextLong() % lifetime /2  > 3*lifetime/2)
             return true;
         return false;
     }

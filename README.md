@@ -1,0 +1,2 @@
+# kulki
+This is a simple simulation of moving balls. Each ball may randomly change direction of it's movement. There are two central balls (marked with black border), which may randomly change color. Whenever color of one of the central balls is changed, all non-central balls change their color to match one of the central balls (color source is determined randomly, but the closer a ball is to a central ball, the higher is chance it will choose that central ball). 
